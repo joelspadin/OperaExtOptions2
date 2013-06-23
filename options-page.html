@@ -1,0 +1,166 @@
+﻿<!doctype html>
+<html class="wallpaper">
+<head>
+	<meta charset="utf-8">
+	<title>Settings</title>
+
+	<link rel="icon" href="/img/icon-16.png">
+	<link rel="stylesheet" href="/css/options.css">
+	<link rel="stylesheet" href="/css/background.css">
+	<script src="/js/lib/storage.js"></script>
+	<script src="/js/lib/options-page.js"></script>
+	<script src="/js/settings.js"></script>
+</head>
+<body>
+	<div id="wallpaper"></div>
+	<div id="content">
+
+		<header>
+			<img src="/img/icon-48.png">
+			<div>
+				<h1><span data-manifest="name"></span> <span data-manifest="version" class="version"></span></h1>
+				<h2>By <span data-manifest="developer.name"></span></h2>
+			</div>
+		</header>
+
+		<section>
+			<h3>Selection</h3>
+			<p>
+				<label><input type="checkbox" name="checkbox"> A checkbox</label>
+			</p>
+			<p>
+				<label><input type="radio" name="radio" value="one"> <span>Radio button 1</span></label>
+				<label><input type="radio" name="radio" value="two"> Radio button 2</label>
+				<label>
+					<input type="radio" name="radio" value="three"> 
+					A third radio button with some really long text which wraps to multiple lines because 
+					it's so long that it won't fit on just one line.
+				</label>
+			</p>
+			<p>
+				<label>
+					<span>Select box:</span>
+					<select name="select">
+						<option value="one">One</option>
+						<option value="two">Two</option>
+						<option value="three">Three</option>
+					</select>
+					<button data-reset="select">Reset to default</button>
+				</label>
+			</p>
+			<p>
+				<label>
+					<span class="top">Multiselect box:</span>
+					<select name="selectmany" multiple>
+						<option value="one">One</option>
+						<option value="two">Two</option>
+						<option value="three">Three</option>
+					</select>
+					<button data-reset="selectmany" class="top">Reset to default</button>
+				</label>
+			</p>
+		</section>
+
+		<section>
+			<h3>Text</h3>
+			<p>
+				<label><span>Textbox:</span> <input type="text" name="textbox"></label>
+			</p>
+			<p>
+				<label>
+					<span>Wider textbox:</span> 
+					<input type="text" name="mediumtext" class="medium">
+					<button data-reset="mediumtext">Reset to default</button>
+				</label>
+			</p>
+			<p>
+				<label><span>Widest textbox:</span> <input type="text" name="widetext" class="wide"></label>
+			</p>
+			<p>
+				<label>
+					<span class="top">Textarea:</span>
+					<textarea name="textarea"></textarea>
+					<button data-reset="textarea" data-confirm class="top">Reset to default</button>
+				</label>
+			</p>
+			<p>
+				<label>
+					<span class="top">Bigger textarea:</span>
+					<textarea name="bigarea" class="wide"></textarea>
+				</label>
+			</p>
+
+			<p>
+				<label class="wrap">
+					<span class="line">Biggest textarea</span>
+					<textarea name="biggestarea" class="full tall"></textarea>
+				</label>
+			</p>
+		</section>
+		
+		<section>
+			<h3>Numeric</h3>
+			<p>
+				<label><span>A number:</span> <input type="number" name="numeric"></label>
+			</p>
+			<p>
+				<label><span>A slider:</span> <input type="range" name="range" min="-100" max="100"></label>
+			</p>
+			<p>
+				<span class="row">
+					<span>Unsaved sliders:</span>
+					<input type="range" name="range2" min="-1" max="1" step="0.01" class="vertical" data-nosave>
+					<input type="range" name="range3" min="-10" max="10" class="vertical" data-nosave>
+					<input type="range" name="range4" min="-100" max="100" class="vertical medium" data-nosave>
+					<input type="range" name="range5" min="-1000" max="1000" class="vertical tall" data-nosave>
+					<input type="range" name="range6" min="5" max="10" step="0.1" class="vertical medium" data-nosave>
+					<input type="range" name="range6" min="0" max="1" step="0.1" class="vertical" data-nosave>
+				</span>
+			</p>
+		</section>
+
+		<section>
+			<h3>Time</h3>
+			<p>
+				<label><span>Date:</span> <input type="date" name="date"></label>
+			</p>
+			<p>
+				<label><span>Month:</span> <input type="month" name="month"></label>
+			</p
+			<p>
+				<label><span>Week:</span> <input type="week" name="week"></label>
+			</p
+			<p>
+				<label><span>Time:</span> <input type="time" name="time"></label>
+			</p>
+		</section>
+
+		<section>
+			<h3>Other</h3>
+			<p>
+				<label>
+					<span>Color:</span> 
+					<input type="color" name="color"> 
+					<button data-reset="color">Reset to Default</button>
+					(This appears to be broken in Opera 15 for now)
+				</label>
+			</p>
+		</section>
+		
+		<section>
+			<h3>Reset</h3>
+			<p>
+				<label>This button resets all of the text inputs at once.</label>
+				<button data-reset="text mediumtext widetext textarea bigarea biggestarea" data-confirm>Reset all text fields</button>
+			</p>
+		</section>
+
+		<footer>
+			OperaExtOptions is &copy; 2011–2013 Joel Spadin. Background images from 
+			<a href="http://lea.verou.me/css3patterns/" target="_blank">lea.verou.me/css3patterns</a>, 
+			<a href="http://subtlepatterns.com/" target="_blank">subtlepatterns.com</a>, and Opera's default theme.
+		</footer>
+
+	</div>
+</body>
+</html>

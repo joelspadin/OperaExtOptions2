@@ -1,0 +1,34 @@
+{
+	"name": "OperaExtOptions Demo",
+	"version": "1.0",
+	"manifest_version": 2,
+	
+	"description": "Provides a simple options page for use in extensions for Opera 15",
+	"developer": {
+		"name": "Joel Spadin",
+		"url": "http://chaosinacan.com"
+	},
+	"icons": { 
+		"16": "img/icon-16.png",
+		"48": "img/icon-48.png"
+	//	"128": "img/icon-128.png"
+	},
+	
+	"background": {
+		"scripts": [
+			"js/lib/storage.js",
+			"js/settings.js",
+			"js/background.js"
+		],
+		"persistent": false
+	},
+	"content_scripts": [],
+	"content_security_policy": "script-src 'self'; object-src 'self';",
+	"incognito": "spanning",
+	"offline_enabled": true,
+	"options_page": "options-page.html",
+	"permissions": [],
+	"requirements": [],
+	"web_accessible_resources": [],
+	"sandbox": { }
+}
