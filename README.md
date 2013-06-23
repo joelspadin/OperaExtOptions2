@@ -58,7 +58,7 @@ Sets the values of multiple settings
 - **prefix**: string - The prefix attached to setting names
 - **storage**: Storage - The storage object where settings are saved
 - **useAccessors**: boolean - Have accessor properties been added for settings?
-- **<setting name>**: any - Gets or sets the value of <setting name>
+- **\<setting name\>**: any - Gets or sets the value of \<setting name\>
 
 ### Auto-generated Properties
 If `useAccessors` is not disabled, a property will be added for every setting given in the `defaults` list. Settings which are not valid property names will be named as follows:
