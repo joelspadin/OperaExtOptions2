@@ -111,6 +111,21 @@ var SettingStorage = (function () {
             'storage', 
             'useAccessors'
         ];
+        function sanitizeName(key) {
+            // remove invalid start characters
+            key = key.replace(/^[^a-zA-Z_]+/, '');
+            // consolidate invalid characters to dashes
+            key = key.replace(/[^a-zA-Z0-9_]+/g, '-');
+            // camel-case dashes
+            var i = -1;
+            while((i = key.indexOf('-')) != -1) {
+                key = key.substr(0, i) + key.substr(i + 1, 1).toUpperCase() + key.substr(i + 2);
+            }
+            if(reserved.indexOf(key) >= 0) {
+                key = '_' + key;
+            }
+            return key;
+        }
         function makeDesc(key) {
             return {
                 get: function () {
@@ -123,8 +138,9 @@ var SettingStorage = (function () {
             };
         }
         for(var key in this.defaults) {
-            if(this.defaults.hasOwnProperty(key) && reserved.indexOf(key) < 0) {
-                descriptors[key] = makeDesc(key);
+            var propName = sanitizeName(key);
+            if(this.defaults.hasOwnProperty(key)) {
+                descriptors[propName] = makeDesc(key);
             }
         }
         Object.defineProperties(this, descriptors);
