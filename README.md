@@ -10,6 +10,8 @@ Also included is a default stylesheet and demonstration options page which mimic
 
 [OptionsPage Class](https://github.com/ChaosinaCan/OperaExtOptions2/wiki/OptionsPage-Class)
 
+[ModalDialog Class](https://github.com/ChaosinaCan/OperaExtOptions2/wiki/ModalDialog-Class)
+
 ## Credits
 If you use one of the included backgrounds, be sure to credit the source:
 - [Blueprint CSS background](http://lea.verou.me/css3patterns/#blueprint-grid) by [Lea Verou](http://lea.verou.me/), modified by me.
