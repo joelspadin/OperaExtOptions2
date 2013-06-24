@@ -506,9 +506,9 @@ interface ModalButton {
 }
 
 class ModalDialog {
-	overlay: HTMLElement;
-	dialog: HTMLElement;
-	onclose: Function;
+	public overlay: HTMLElement;
+	public dialog: HTMLElement;
+	public onclose: Function;
 
 	public static confirm(title: string, text: string, callback: (result: bool) => any): ModalDialog {
 		return new ModalDialog(title, text,
@@ -532,7 +532,7 @@ class ModalDialog {
 	}
 
 	constructor(title: string, text: string, ...buttons: ModalButton[]);
-	constructor(title: string, text: string, onclose: EventListener, ...buttons: ModalButton[]);
+	constructor(title: string, text: string, onclose: Function, ...buttons: ModalButton[]);
 	constructor(title: string, text: string, onclose: any) {
 		var buttons: ModalButton[];
 		if (typeof onclose === 'function') {
@@ -630,7 +630,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	}
 
 	// Find any range sliders and attach value displays to them
-	var ranges = document.querySelectorAll('input[type=range]');
+	var ranges = document.querySelectorAll('input[type=range]:not([data-no-bubble])');
 	for (var i = 0; i < ranges.length; i++) {
 		ranges[i]['_bubble'] = new RangeBubble(<HTMLInputElement>ranges[i]);
 	}

@@ -530,7 +530,7 @@ window.addEventListener('DOMContentLoaded', function () {
         }
     }
     // Find any range sliders and attach value displays to them
-    var ranges = document.querySelectorAll('input[type=range]');
+    var ranges = document.querySelectorAll('input[type=range]:not([data-no-bubble])');
     for(var i = 0; i < ranges.length; i++) {
         ranges[i]['_bubble'] = new RangeBubble(ranges[i]);
     }
