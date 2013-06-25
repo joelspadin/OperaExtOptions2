@@ -2,7 +2,7 @@
 	initSetting?: string;
 	prefix?: string;
 	storage?: Storage;
-	useAccessors?: bool;
+	useAccessors?: boolean;
 }
 
 class SettingStorage {
@@ -11,9 +11,9 @@ class SettingStorage {
 	initSetting: string = '__initialized__';
 	prefix: string = '';
 	storage: Storage = localStorage;
-	useAccessors: bool = true;	
+	useAccessors: boolean = true;	
 
-	private _firstRun: bool = false;
+	private _firstRun: boolean = false;
 	get firstRun() {
 		return this._firstRun;
 	}

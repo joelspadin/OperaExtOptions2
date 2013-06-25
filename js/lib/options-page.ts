@@ -32,59 +32,59 @@ class OptionsPage {
 	/* Static Functions */
 
 	/** Gets whether an element is an input field */
-	static isInput(element: Element) {
-		if (InputTags.indexOf(element.tagName.toLowerCase()) >= 0) {
+	static isInput(element: HTMLElement) {
+		if (OptionsPage.InputTags.indexOf(element.tagName.toLowerCase()) >= 0) {
 			return true;
 		}
 	}
 
 	/** Gets whether an element should be ignored */
-	static shouldSkip(element: Element) {
+	static shouldSkip(element: HTMLElement) {
 		if (element instanceof HTMLInputElement) {
-			return (SkipTypes.indexOf((<HTMLInputElement>element).type.toLowerCase()) >= 0);
+			return (OptionsPage.SkipTypes.indexOf((<HTMLInputElement>element).type.toLowerCase()) >= 0);
 		} else {
 			return false;
 		}
 	}
 
 	/** Gets whether an element is a numeric input */
-	static isNumeric(element: Element) {
+	static isNumeric(element: HTMLElement) {
 		if (element instanceof HTMLInputElement) {
-			return (NumericTypes.indexOf((<HTMLInputElement>element).type.toLowerCase()) >= 0);
+			return (OptionsPage.NumericTypes.indexOf((<HTMLInputElement>element).type.toLowerCase()) >= 0);
 		} else {
 			return false;
 		}
 	}
 
 	/** Gets whether an element is a boolean input */
-	static isCheckable(element: Element) {
+	static isCheckable(element: HTMLElement) {
 		if (element instanceof HTMLInputElement) {
-			return (CheckableTypes.indexOf((<HTMLInputElement>element).type.toLowerCase()) >= 0);
+			return (OptionsPage.CheckableTypes.indexOf((<HTMLInputElement>element).type.toLowerCase()) >= 0);
 		} else {
 			return false;
 		}
 	}
 
 	/** Gets whether an element is a radio button */
-	static isRadio(element: Element) {
+	static isRadio(element: HTMLElement) {
 		if (element instanceof HTMLInputElement) {
-			return (RadioTypes.indexOf((<HTMLInputElement>element).type.toLowerCase()) >= 0);
+			return (OptionsPage.RadioTypes.indexOf((<HTMLInputElement>element).type.toLowerCase()) >= 0);
 		} else {
 			return false;
 		}
 	}
 
 	/** Gets whether an element is a multi-select input */
-	static isMultiSelect(element: Element) {
+	static isMultiSelect(element: HTMLElement) {
 		if (element instanceof HTMLSelectElement) {
-			return (MultiSelectTypes.indexOf((<HTMLInputElement>element).type.toLowerCase()) >= 0);
+			return (OptionsPage.MultiSelectTypes.indexOf((<HTMLInputElement>element).type.toLowerCase()) >= 0);
 		} else {
 			return false;
 		}
 	}
 
 	/** Gets the value of a set of radio buttons */
-	static getRadioValue(element: Element): string {
+	static getRadioValue(element: HTMLElement): string {
 		var inputs = element.ownerDocument.querySelectorAll('input[type=radio][name="' + element.getAttribute('name') + '"]');
 		for (var i = 0; i < inputs.length; i++) {
 			var input = <HTMLInputElement>inputs[i];
@@ -120,7 +120,7 @@ class OptionsPage {
 	/**
 	 * Gets the load/save transformation function for an element 
 	 */
-	private static getTransformFunction(element: Element, funcName: string): Function {
+	private static getTransformFunction(element: HTMLElement, funcName: string): Function {
 		var func = element.dataset.funcName;
 		if (func) {
 			return window[func] || null;
@@ -135,7 +135,7 @@ class OptionsPage {
 
 	private storage: SettingStorage;
 	private document: Document;
-	private initialized: bool = false;
+	private initialized: boolean = false;
 	private initQueue: { el: HTMLElement; reset: HTMLElement; }[] = [];
 
 	/* Public Functions */
@@ -200,7 +200,7 @@ class OptionsPage {
 					// if not, look for reset buttons on the page already
 					var resets = this._findResetButtons(element);
 					for (var i = 0; i < resets.length; i++) {
-						this._addResetButton(<Element>resets[i], [element]);
+						this._addResetButton(<HTMLElement>resets[i], [element]);
 					}
 				}
 			}
@@ -221,7 +221,7 @@ class OptionsPage {
 
 		keys.sort(sortfunction);
 
-		var list = <HTMLDListElement>document.createElement('dl');
+		var list = document.createElement('dl');
 		keys.forEach((key) => {
 			var term = document.createElement('dt');
 			var desc = document.createElement('dd');
@@ -250,7 +250,7 @@ class OptionsPage {
 
 	private _walkElements(elements: NodeList, callback: (element: Element) => any) {
 		for (var i = 0; i < elements.length; i++) {
-			var element = <Element>elements[i];
+			var element = <HTMLElement>elements[i];
 
 			var name = element.getAttribute('name');
 			if (!name || OptionsPage.shouldSkip(element) || element.hasAttribute('data-nosave')) {
@@ -261,7 +261,7 @@ class OptionsPage {
 		}
 	}
 
-	private _setupElement(element: Element) {
+	private _setupElement(element: HTMLElement) {
 		element.addEventListener('change', this._onElementChanged.bind(this), true);
 		this._update(<HTMLElement>element);
 	}
@@ -271,7 +271,7 @@ class OptionsPage {
 		this._save(element);
 	}
 
-	private _addResetButton(button: Element, elements: Element[]) {
+	private _addResetButton(button: HTMLElement, elements: HTMLElement[]) {
 		var self = this;
 		button.addEventListener('click', (e: Event) => {
 			if ((<HTMLElement>e.target).hasAttribute('data-confirm')) {
@@ -309,7 +309,7 @@ class OptionsPage {
 		}
 	}
 
-	private _findResetButtons(element: Element) {
+	private _findResetButtons(element: HTMLElement) {
 		var name = element.getAttribute('name');
 		try {
 			return this.document.querySelectorAll('[data-reset~="' + name + '"]');
@@ -321,13 +321,13 @@ class OptionsPage {
 	private _setupAllResetButtons() {
 		var resets = this.document.querySelectorAll('[data-reset]');
 		for (var i = 0; i < resets.length; i++) {
-			var elementNames = (<Element>resets[i]).dataset.reset.split(' ');
+			var elementNames = (<HTMLElement>resets[i]).dataset.reset.split(' ');
 			var elements = [];
 			elementNames.forEach((name) => {
 				elements = elements.concat(Array.prototype.slice.call(document.getElementsByName(name)));
 			});
 
-			this._addResetButton(<Element>resets[i], Array.prototype.slice.call(elements));
+			this._addResetButton(<HTMLElement>resets[i], Array.prototype.slice.call(elements));
 		}
 	}
 
@@ -416,7 +416,7 @@ class OptionsPage {
 			return Array.prototype.slice.call(this.document.getElementsByName(element));
 		} else if (element instanceof NodeList) {
 			return Array.prototype.slice.call(element);
-		} else if (element instanceof Element) {
+		} else if (element instanceof HTMLElement) {
 			return [element];
 		} else if (element.length) {
 			return element;
@@ -510,7 +510,7 @@ class ModalDialog {
 	public dialog: HTMLElement;
 	public onclose: Function;
 
-	public static confirm(title: string, text: string, callback: (result: bool) => any): ModalDialog {
+	public static confirm(title: string, text: string, callback: (result: boolean) => any): ModalDialog {
 		return new ModalDialog(title, text,
 			{
 				text: 'Cancel',

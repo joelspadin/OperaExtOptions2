@@ -9,17 +9,17 @@
 	/** Sets the web storage object used to save settings. Defaults to localStorage. */
 	storage?: Storage;
 	/** If set false, prevents accessor properties from being created for each setting. */
-	useAccessors?: bool;
+	useAccessors?: boolean;
 }
 
-class SettingStorageBase {
+declare class SettingStorageBase {
 	defaults: { [key: string]: any; };
 	initSetting: string;
 	prefix: string;
 	storage: Storage;
-	useAccessors: bool;
+	useAccessors: boolean;
 	/** Returns true if this is the first time the extension has been run. */
-	firstRun: bool;
+	firstRun: boolean;
 
 	/**
 	 * @param defaults A map containing setting names and their default values
@@ -46,7 +46,7 @@ class SettingStorageBase {
 }
 
 
-class SettingStorage extends SettingStorageBase {
+declare class SettingStorage extends SettingStorageBase {
 	// If useAccessors is not disabled, give the names and types of all your settings 
 	// here so they can be referenced in TypeScript code.
 
