@@ -50,6 +50,11 @@ html {
 	left: 0;
 	right: 0;
 
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-flow: column;
+	flex-flow: column;
+
 	min-height: 100%;
 	max-width: @body-width;
 	margin: 0 auto;
@@ -98,7 +103,17 @@ header {
 }
 
 footer {
-	margin-top: 40px;
+	-webkit-flex: 1 1 auto;
+	flex: 1 1 auto;
+
+	display: -webkit-flex;
+	display: flex;
+	-webkit-justify-content: flex-end;
+	justify-content: flex-end;
+	-webkit-flex-flow: column;
+	flex-flow: column;
+
+	margin-top: 16px;
 	color: @footer-text;
 	text-align: center;
 }
@@ -231,7 +246,7 @@ button {
 /* Setting Sections */
 
 section {
-	margin: 8px 0 24px;
+	margin: 0 0 24px;
 	padding-left: 18px;
 
 	h3 {
