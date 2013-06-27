@@ -1,6 +1,6 @@
 ﻿/// <reference path="settings.ts" />
+/// <reference path="chrome.d.ts" />
 
-
-window.addEventListener('DOMContentLoaded', function () {
+chrome.runtime.onInstalled.addListener((details) => {
 	settings.init();
 });

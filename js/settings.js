@@ -1,23 +1,16 @@
-/// <reference path="lib/storage.d.ts" />
+﻿/// <reference path="lib/storage.d.ts" />
 var settings = new SettingStorage({
     checkbox: true,
     radio: 'one',
     select: 'two',
-    selectmany: [
-        'one', 
-        'three'
-    ],
+    selectmany: ['one', 'three'],
     textbox: 'foo',
     mediumtext: 'This a textbox with more text in it.',
     widetext: 'This is a textbox with a very large amount of text inside of it.',
     textarea: 'This is a <textarea>.\nIt has multiple lines.',
     bigarea: 'This is a <textarea> with lots of space.',
     biggestarea: 'This is a really big <textarea>.',
-    transform: [
-        'foo', 
-        'bar', 
-        'baz'
-    ],
+    transform: ['foo', 'bar', 'baz'],
     numeric: 42,
     range: 0,
     color: '#ff0000',
