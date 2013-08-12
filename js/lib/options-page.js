@@ -235,7 +235,7 @@
 
     OptionsPage.prototype._sendChangedEvent = function (key, oldValue, newValue) {
         var e = document.createEvent('CustomEvent');
-        e.initCustomEvent('settings', true, true, {
+        e.initCustomEvent('setting', true, true, {
             key: key,
             oldValue: oldValue,
             newValue: newValue

@@ -333,7 +333,7 @@ class OptionsPage {
 
 	private _sendChangedEvent(key: string, oldValue: any, newValue: any) {
 		var e = <CustomEvent>document.createEvent('CustomEvent');
-		e.initCustomEvent('settings', true, true, {
+		e.initCustomEvent('setting', true, true, {
 			key: key,
 			oldValue: oldValue,
 			newValue: newValue,
