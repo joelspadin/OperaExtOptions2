@@ -205,6 +205,10 @@ section span.row.wrap {
   -webkit-flex-flow: row wrap;
   flex-flow: row wrap;
 }
+section label.disabled,
+section span.row.disabled {
+  color: rgba(0, 0, 0, 0.5);
+}
 section label input,
 section span.row input,
 section label select,
@@ -236,6 +240,12 @@ section span.row .line {
   -webkit-flex: 0 0 100%;
   flex: 0 0 100%;
   margin-bottom: 0.5rem;
+}
+section label > input[type=checkbox]:first-child,
+section span.row > input[type=checkbox]:first-child,
+section label > input[type=radio]:first-child,
+section span.row > input[type=radio]:first-child {
+  margin-left: 0;
 }
 /* Range bubbles */
 input[type=range] + output {
@@ -277,6 +287,7 @@ input[type=range].vertical + output::after {
   border-right: 10px solid #444444;
   border-bottom: 5px solid transparent;
 }
+input[type=range]:focus + output,
 input[type=range]:hover + output,
 input[type=range]:active + output {
   opacity: 1;

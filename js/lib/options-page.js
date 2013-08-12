@@ -1,9 +1,4 @@
 ﻿var OptionsPage = (function () {
-    /* Public Functions */
-    /**
-    * @param storage The storage object to which the page should be synced
-    * @param document The document to sync. Omit to use the main document.
-    */
     function OptionsPage(storage, document) {
         this.initialized = false;
         this.initQueue = [];
@@ -16,16 +11,13 @@
             window.addEventListener('DOMContentLoaded', this._onDOMContentLoaded.bind(this));
         }
     }
-    OptionsPage.isInput = /* Static Functions */
-    /** Gets whether an element is an input field */
-    function (element) {
+    OptionsPage.isInput = function (element) {
         if (OptionsPage.InputTags.indexOf(element.tagName.toLowerCase()) >= 0) {
             return true;
         }
     };
 
-    OptionsPage.shouldSkip = /** Gets whether an element should be ignored */
-    function (element) {
+    OptionsPage.shouldSkip = function (element) {
         if (element instanceof HTMLInputElement) {
             return (OptionsPage.SkipTypes.indexOf((element).type.toLowerCase()) >= 0);
         } else {
@@ -33,8 +25,7 @@
         }
     };
 
-    OptionsPage.isNumeric = /** Gets whether an element is a numeric input */
-    function (element) {
+    OptionsPage.isNumeric = function (element) {
         if (element instanceof HTMLInputElement) {
             return (OptionsPage.NumericTypes.indexOf((element).type.toLowerCase()) >= 0);
         } else {
@@ -42,8 +33,7 @@
         }
     };
 
-    OptionsPage.isCheckable = /** Gets whether an element is a boolean input */
-    function (element) {
+    OptionsPage.isCheckable = function (element) {
         if (element instanceof HTMLInputElement) {
             return (OptionsPage.CheckableTypes.indexOf((element).type.toLowerCase()) >= 0);
         } else {
@@ -51,8 +41,7 @@
         }
     };
 
-    OptionsPage.isRadio = /** Gets whether an element is a radio button */
-    function (element) {
+    OptionsPage.isRadio = function (element) {
         if (element instanceof HTMLInputElement) {
             return (OptionsPage.RadioTypes.indexOf((element).type.toLowerCase()) >= 0);
         } else {
@@ -60,8 +49,7 @@
         }
     };
 
-    OptionsPage.isMultiSelect = /** Gets whether an element is a multi-select input */
-    function (element) {
+    OptionsPage.isMultiSelect = function (element) {
         if (element instanceof HTMLSelectElement) {
             return (OptionsPage.MultiSelectTypes.indexOf((element).type.toLowerCase()) >= 0);
         } else {
@@ -69,8 +57,7 @@
         }
     };
 
-    OptionsPage.getRadioValue = /** Gets the value of a set of radio buttons */
-    function (element) {
+    OptionsPage.getRadioValue = function (element) {
         var inputs = element.ownerDocument.querySelectorAll('input[type=radio][name="' + element.getAttribute('name') + '"]');
         for (var i = 0; i < inputs.length; i++) {
             var input = inputs[i];
@@ -81,12 +68,7 @@
         return null;
     };
 
-    OptionsPage.coerceToLimits = /**
-    * Coerces a number to the min/max values set on an input element
-    * @param element The input element
-    * @param value The value to check. If omitted, the element's current value is used.
-    */
-    function (element, value) {
+    OptionsPage.coerceToLimits = function (element, value) {
         if (value === undefined) {
             value = element.valueAsNumber;
         }
@@ -103,10 +85,7 @@
         return value;
     };
 
-    OptionsPage.getTransformFunction = /**
-    * Gets the load/save transformation function for an element
-    */
-    function (element, funcName) {
+    OptionsPage.getTransformFunction = function (element, funcName) {
         var func = element.dataset.funcName;
         if (func) {
             return window[func] || null;
@@ -123,14 +102,8 @@
         this._resolveElement(element).forEach(this._save.bind(this));
     };
 
-    /**
-    * Configures an element to be synced with storage.
-    * @param element The element to sync
-    * @param resetButton An element which, when clicked, should reset the synced element to its default value
-    */
     OptionsPage.prototype.addInput = function (element, resetButton) {
         if (!this.initialized) {
-            // If page not initialized, wait until later to add input
             this.initQueue.push({ el: element, reset: resetButton });
         } else {
             if (element.tagName && OptionsPage.isInput(element)) {
@@ -139,7 +112,6 @@
                 if (resetButton !== undefined) {
                     this._addResetButton(resetButton, [element]);
                 } else {
-                    // if not, look for reset buttons on the page already
                     var resets = this._findResetButtons(element);
                     for (var i = 0; i < resets.length; i++) {
                         this._addResetButton(resets[i], [element]);
@@ -149,10 +121,6 @@
         }
     };
 
-    /**
-    * Returns a DL element with the keys and raw values in storage
-    * @param sortfunction A function to sort settings by name
-    */
     OptionsPage.prototype.debugStorage = function (sortfunction) {
         var _this = this;
         var keys = [];
@@ -177,7 +145,6 @@
         return list;
     };
 
-    /* Private Functions */
     OptionsPage.prototype._onDOMContentLoaded = function () {
         var _this = this;
         var formElements = document.querySelectorAll(OptionsPage.InputTags.join(','));
@@ -293,7 +260,6 @@
                 inputEl.checked = !!value;
             }
         } else if (OptionsPage.isMultiSelect(element)) {
-            // loop through <option> elements and select/unselect them
             var select = element;
             for (var i = 0; i < select.options.length; i++) {
                 var option = select.options[i];
@@ -320,7 +286,6 @@
         } else if (OptionsPage.isNumeric(element)) {
             value = OptionsPage.coerceToLimits(inputEl, inputEl.valueAsNumber);
         } else if (OptionsPage.isMultiSelect(element)) {
-            // collect selected option values as an array
             value = [];
             var options = (element).selectedOptions;
             for (var i = 0; i < options.length; i++) {
@@ -371,7 +336,6 @@
     return OptionsPage;
 })();
 
-/** Adapted from http://css-tricks.com/value-bubbles-for-range-inputs/ */
 var RangeBubble = (function () {
     function RangeBubble(input) {
         this._input = input;
@@ -386,8 +350,8 @@ var RangeBubble = (function () {
         this._input.addEventListener('change', this._modifyOffset.bind(this));
         this._modifyOffset();
 
-        // make sure the range disappears once it fades out so that it doesn't block other elements
         this._input.addEventListener('mouseover', this._showOutput.bind(this));
+        this._input.addEventListener('focus', this._showOutput.bind(this));
         this._output.addEventListener('transitionend', this._hideOutput.bind(this));
     }
     RangeBubble.prototype._modifyOffset = function () {
@@ -544,12 +508,10 @@ var ModalDialog = (function () {
     return ModalDialog;
 })();
 
-// Automatically intialize things on startup
 window.optionsPage = null;
 document.title = chrome.app.getDetails().name + ' Settings';
 
 window.addEventListener('DOMContentLoaded', function () {
-    // If there is a storage object with a common name, build the options page automatically
     var names = ['settings', 'storage'];
     for (var i = 0; i < names.length; i++) {
         if (typeof window[names[i]] !== 'undefined') {
@@ -561,13 +523,11 @@ window.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Find any range sliders and attach value displays to them
     var ranges = document.querySelectorAll('input[type=range]:not([data-no-bubble])');
     for (var i = 0; i < ranges.length; i++) {
         ranges[i]['_bubble'] = new RangeBubble(ranges[i]);
     }
 
-    // Fill elements with data from the extension manifest
     var manifest = chrome.app.getDetails();
 
     var fields = document.querySelectorAll('[data-manifest]');

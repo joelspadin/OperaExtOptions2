@@ -1,5 +1,7 @@
 ﻿/* Colors */
 
+@text: #000;
+
 @body-width: 680px;
 @body-border: rgba(0, 0, 0, 0.25);
 @body-background: #fff;
@@ -275,6 +277,10 @@ section {
 			flex-flow: row wrap;
 		}
 
+		&.disabled {
+			color: fade(@text, 50%);
+		}
+
 		input, select, textarea, button {
 			-webkit-flex: 0 0 auto;
 			flex: 0 0 auto;
@@ -299,6 +305,11 @@ section {
 			-webkit-flex: 0 0 100%;
 			flex: 0 0 100%;
 			margin-bottom: 0.5rem;
+		}
+
+		& > input[type=checkbox]:first-child,
+		& > input[type=radio]:first-child {
+			margin-left: 0;
 		}
 	}
 }
@@ -354,6 +365,7 @@ input[type=range].vertical + output {
 	}
 }
 
+input[type=range]:focus + output,
 input[type=range]:hover + output,
 input[type=range]:active + output {
 	opacity: 1;

@@ -494,6 +494,7 @@ class RangeBubble {
 
 		// make sure the range disappears once it fades out so that it doesn't block other elements
 		this._input.addEventListener('mouseover', this._showOutput.bind(this));
+		this._input.addEventListener('focus', this._showOutput.bind(this));
 		this._output.addEventListener('transitionend', this._hideOutput.bind(this));
 	}
 }
