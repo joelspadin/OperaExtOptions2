@@ -121,7 +121,7 @@ class OptionsPage {
 	 * Gets the load/save transformation function for an element 
 	 */
 	private static getTransformFunction(element: HTMLElement, funcName: string): Function {
-		var func = element.dataset.funcName;
+		var func = element.dataset[funcName];
 		if (func) {
 			return window[func] || null;
 		} else {
@@ -177,6 +177,17 @@ class OptionsPage {
 	public save(elements: NodeList);
 	public save(element: any) {
 		this._resolveElement(element).forEach(this._save.bind(this));
+	}
+
+	/**
+	 * Changes the storage object used by the options page.
+	 * This will update all elements on the page to the values in the new storage object.
+	 */
+	public setStorage(storage: SettingStorage) {
+		this.storage = storage;
+
+		var formElements = document.querySelectorAll(OptionsPage.InputTags.join(','));
+		this._walkElements(formElements, this.update);
 	}
 
 	/**

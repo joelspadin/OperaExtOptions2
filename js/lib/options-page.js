@@ -86,7 +86,7 @@
     };
 
     OptionsPage.getTransformFunction = function (element, funcName) {
-        var func = element.dataset.funcName;
+        var func = element.dataset[funcName];
         if (func) {
             return window[func] || null;
         } else {
@@ -100,6 +100,13 @@
 
     OptionsPage.prototype.save = function (element) {
         this._resolveElement(element).forEach(this._save.bind(this));
+    };
+
+    OptionsPage.prototype.setStorage = function (storage) {
+        this.storage = storage;
+
+        var formElements = document.querySelectorAll(OptionsPage.InputTags.join(','));
+        this._walkElements(formElements, this.update);
     };
 
     OptionsPage.prototype.addInput = function (element, resetButton) {

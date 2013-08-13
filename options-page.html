@@ -10,6 +10,7 @@
 	<script src="/js/lib/storage.js"></script>
 	<script src="/js/lib/options-page.js"></script>
 	<script src="/js/settings.js"></script>
+	<script src="/js/options.js"></script>
 </head>
 <body>
 	<div id="wallpaper"></div>
@@ -96,6 +97,13 @@
 					<textarea name="biggestarea" class="full tall"></textarea>
 				</label>
 			</p>
+
+			<p>
+				<label class="wrap">
+					<span class="top">Textarea where lines are converted to an array:</span>
+					<textarea name="transform" data-savefunc="linesToArray" data-loadfunc="arrayToLines" class="full"></textarea>
+				</label>
+			</p>
 		</section>
 		
 		<section>
@@ -144,6 +152,10 @@
 					<button data-reset="color">Reset to Default</button>
 					(This appears to be broken in Opera 15 for now)
 				</label>
+			</p>
+			<p>
+				<label>This button switches between two sets of settings.</label>
+				<button id="switch-settings">Swap everything!</button>
 			</p>
 		</section>
 		
