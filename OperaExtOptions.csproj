@@ -44,13 +44,13 @@
 		</VisualStudio>
 	</ProjectExtensions>
 	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-		<TypeScriptTarget>ES3</TypeScriptTarget>
+		<TypeScriptTarget>ES5</TypeScriptTarget>
 		<TypeScriptIncludeComments>true</TypeScriptIncludeComments>
 		<TypeScriptSourceMap>true</TypeScriptSourceMap>
 		<TypeScriptModuleKind>AMD</TypeScriptModuleKind>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
-		<TypeScriptTarget>ES3</TypeScriptTarget>
+		<TypeScriptTarget>ES5</TypeScriptTarget>
 		<TypeScriptIncludeComments>false</TypeScriptIncludeComments>
 		<TypeScriptSourceMap>false</TypeScriptSourceMap>
 		<TypeScriptModuleKind>AMD</TypeScriptModuleKind>
@@ -80,27 +80,24 @@
 		<Content Include="img\pattern\use_your_illusion_%402X.png" />
 		<Content Include="img\pattern\wild_oliva.png" />
 		<Content Include="img\pattern\wild_oliva_%402X.png" />
-		<Content Include="img\wallpaper-2.jpg" />
-		<Content Include="img\wallpaper.jpg" />
-		<Content Include="js\background.ts" />
+		<TypeScriptCompile Include="js\background.ts" />
 		<Content Include="js\background.js">
 			<DependentUpon>background.ts</DependentUpon>
 		</Content>
-		<Content Include="js\chrome.d.ts" />
-		<Content Include="js\lib\options-page.ts" />
+		<Content Include="js\lib\chrome.d.ts" />
+		<TypeScriptCompile Include="js\lib\options-page.ts" />
 		<Content Include="js\lib\options-page.js">
 			<DependentUpon>options-page.ts</DependentUpon>
 		</Content>
-		<Content Include="js\lib\storage.d.ts" />
-		<Content Include="js\lib\storage.ts" />
+		<TypeScriptCompile Include="js\lib\storage.ts" />
 		<Content Include="js\lib\storage.js">
 			<DependentUpon>storage.ts</DependentUpon>
 		</Content>
-		<Content Include="js\options.ts" />
+		<TypeScriptCompile Include="js\options.ts" />
 		<Content Include="js\options.js">
 			<DependentUpon>options.ts</DependentUpon>
 		</Content>
-		<Content Include="js\settings.ts" />
+		<TypeScriptCompile Include="js\settings.ts" />
 		<Content Include="js\settings.js">
 			<DependentUpon>settings.ts</DependentUpon>
 		</Content>

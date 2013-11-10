@@ -1,4 +1,4 @@
-﻿html.blueprint #wallpaper {
+﻿#wallpaper.blueprint {
 	background-color: #005D96;
 	background-image:
 		radial-gradient(rgba(0, 93, 150, 0.8), rgba(0, 93, 150, 0.7) 60%, rgba(0, 93, 150, 0)),
@@ -10,7 +10,7 @@
 	background-position: 0 0, -1px -1px, -1px -1px, -1px -1px, -1px -1px;
 }
 
-html.carbon #wallpaper {
+#wallpaper.carbon {
 	background:
 		linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
 		linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,
@@ -22,40 +22,34 @@ html.carbon #wallpaper {
 	background-size: 20px 20px;
 }
 
-html.wallpaper #wallpaper {
-	background-image: url(/img/wallpaper.jpg);
-	background-position: 50% 100%;
-	background-size: cover;
-}
-
-html.binding #wallpaper {
+#wallpaper.binding {
 	background-image: url(/img/pattern/binding_dark.png);
 }
 
-html.lozenge #wallpaper {
+#wallpaper.lozenge {
 	background-image: url(/img/pattern/black_lozenge.png);
 }
 
-html.debut #wallpaper {
+#wallpaper.debut {
 	background-image: url(/img/pattern/debut_dark.png);
 }
 
-html.hexabump #wallpaper {
+#wallpaper.hexabump {
 	background-image: url(/img/pattern/hexabump.png);
 }
 
-html.noise #wallpaper {
+#wallpaper.noise  {
 	background-image: url(/img/pattern/noisy_net.png);
 }
 
-html.tweed #wallpaper {
+#wallpaper.tweed {
 	background-image: url(/img/pattern/tweed.png);
 }
 
-html.illusion #wallpaper {
+#wallpaper.illusion {
 	background-image: url(/img/pattern/use_your_illusion.png);
 }
 
-html.oliva #wallpaper {
+#wallpaper.oliva {
 	background-image: url(/img/pattern/wild_oliva.png);
 }

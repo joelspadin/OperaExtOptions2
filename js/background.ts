@@ -1,5 +1,5 @@
 ﻿/// <reference path="settings.ts" />
-/// <reference path="chrome.d.ts" />
+/// <reference path="lib/chrome.d.ts" />
 
 chrome.runtime.onInstalled.addListener((details) => {
 	settings.init();

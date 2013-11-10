@@ -1,4 +1,5 @@
-﻿/// <reference path="storage.d.ts" />
+﻿/// <reference path="storage.ts" />
+/// <reference path="chrome.d.ts" />
 
 interface Element {
 	dataset: any;
@@ -8,7 +9,9 @@ interface Window {
 	optionsPage: OptionsPage;
 }
 
-declare var chrome: any;
+interface HTMLElement {
+	ownerDocument: Document;
+}
 
 class OptionsPage {
 
@@ -624,7 +627,7 @@ class ModalDialog {
 // Automatically intialize things on startup
 
 window.optionsPage = null;
-document.title = chrome.app.getDetails().name + ' Settings';
+document.title = chrome.runtime.getManifest()['name'] + ' Settings';
 
 window.addEventListener('DOMContentLoaded', () => {
 
@@ -634,7 +637,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 		if (typeof window[names[i]] !== 'undefined') {
 			var settings = window[names[i]];
-			if (settings instanceof SettingStorage) {
+			if (settings instanceof SettingStorageClass) {
 				window.optionsPage = new OptionsPage(settings);
 				break;
 			}
@@ -648,17 +651,35 @@ window.addEventListener('DOMContentLoaded', () => {
 	}
 
 	// Fill elements with data from the extension manifest
-	var manifest = chrome.app.getDetails();
+	var manifest = <any>chrome.runtime.getManifest();
 
 	var fields = document.querySelectorAll('[data-manifest]');
 	for (var i = 0; i < fields.length; i++) {
-		var properties = (<HTMLElement>fields[i]).dataset.manifest.split('.');
-		var current = manifest;
+		var field = <HTMLElement>fields[i];
+		var format = field.dataset.format || '{0}';
+		var values = [];
 
-		for (var k = 0; k < properties.length; k++) {
-			current = current[properties[k]];
+		field.dataset.manifest.split(',').forEach((property) => {
+			var chunks = property.split('.');
+			var current = manifest;
+
+			try {
+				chunks.forEach((chunk) => {
+					current = current[chunk];
+				});
+			} catch (e) {
+				current = undefined;
+			}
+
+			values.push(current);
+		});
+		
+		if (values.length === 0 || values[0] === undefined) {
+			field.textContent = 'manifest: ' + field.dataset.manifest;
+		} else {
+			field.textContent = format.replace(/{(\d+)}/g, function (match, index) {
+				return (typeof values[index] != 'undefined') ? values[index].toString() : match.toString();
+			});
 		}
-
-		fields[i].textContent = current ? current.toString() : 'manifest: ' + properties.join('.');
 	}
 });

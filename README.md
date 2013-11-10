@@ -17,4 +17,3 @@ If you use one of the included backgrounds, be sure to credit the source:
 - [Blueprint CSS background](http://lea.verou.me/css3patterns/#blueprint-grid) by [Lea Verou](http://lea.verou.me/), modified by me.
 - [Carbon CSS background](http://lea.verou.me/css3patterns/#carbon) by [Atle Mo and Sébastien Grosjean](http://www.zencocoon.com/)
 - Tiled image backgrounds from [subtlepatterns.com](http://subtlepatterns.com)
-- Mountains image taken from Opera 15's default theme

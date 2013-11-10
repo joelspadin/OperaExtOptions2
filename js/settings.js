@@ -1,4 +1,4 @@
-﻿var settings = new SettingStorage({
+﻿var settings = CreateSettings({
     checkbox: true,
     radio: 'one',
     select: 'two',
@@ -19,7 +19,9 @@
     time: '00:00'
 });
 
-var antiSettings = new SettingStorage({
+// This is just to show off changing which storage object the options page uses.
+// Normally, you wouldn't need two storage objects.
+var antiSettings = CreateSettings({
     checkbox: false,
     radio: 'two',
     select: 'one',
@@ -41,3 +43,4 @@ var antiSettings = new SettingStorage({
 }, {
     prefix: 'anti_'
 });
+//@ sourceMappingURL=settings.js.map

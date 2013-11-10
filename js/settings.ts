@@ -1,6 +1,30 @@
-﻿/// <reference path="lib/storage.d.ts" />
+﻿/// <reference path="lib/storage.ts" />
 
-var settings = new SettingStorage({
+interface SettingStorage {
+	// If useAccessors is not disabled, give the names and types of all your settings 
+	// here so they can be referenced in TypeScript code.
+
+	checkbox: boolean;
+	radio: string;
+	select: string;
+	selectmany: string[];
+	textbox: string;
+	mediumtext: string;
+	widetext: string;
+	textarea: string;
+	bigarea: string;
+	biggestarea: string;
+	transform: string[];
+	numeric: number;
+	range: number;
+	color: string;
+	date: string;
+	month: string;
+	week: string;
+	time: string;
+}
+
+var settings = CreateSettings({
 	checkbox: true,
 	radio: 'one',
 	select: 'two',
@@ -23,7 +47,7 @@ var settings = new SettingStorage({
 
 // This is just to show off changing which storage object the options page uses.
 // Normally, you wouldn't need two storage objects.
-var antiSettings = new SettingStorage({
+var antiSettings = CreateSettings({
 	checkbox: false,
 	radio: 'two',
 	select: 'one',

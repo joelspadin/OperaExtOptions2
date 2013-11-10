@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OperaExtOptions", "OperaExtOptions\OperaExtOptions.csproj", "{5558965F-BA22-4C06-ACF5-86D9745F453A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OperaExtOptions", "OperaExtOptions.csproj", "{5558965F-BA22-4C06-ACF5-86D9745F453A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

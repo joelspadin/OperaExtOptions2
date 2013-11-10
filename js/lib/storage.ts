@@ -1,11 +1,45 @@
 ﻿interface SettingStorageOptions {
+	/** Sets the name of the setting used to save that the extension has been run */
 	initSetting?: string;
+	/** String to place before each setting name when saving to web storage */
 	prefix?: string;
+	/* Sets the web storage object used to save settings */
 	storage?: Storage;
+	/* If set to false, accessor properties will not be created for each setting */
 	useAccessors?: boolean;
 }
 
-class SettingStorage {
+interface SettingStorageBase {
+	defaults: { [key: string]: any; };
+	initSetting: string;
+	prefix: string;
+	storage: Storage;
+	useAccessors: boolean;
+	/** Returns true if this is the first time the extension has been run. */
+	firstRun: boolean;
+
+	/** Initializes storage and sets any uninitialized settings to their default values.
+	 * This should be called once when the extension starts. */
+	init();
+	/** Gets the value of a setting */
+	get (key: string): any;
+	/** Sets the value of a setting */
+	set (key: string, value: any);
+	/** Returns a map containing all settings and their current values */
+	getAll(): { [key: string]: any; };
+	/** Sets the values of one or more settings */
+	setAll(setting: { [key: string]: any; });
+	/** Returns true if a setting with the given name exists */
+	isDefined(key: string): bool;
+	/** Reset a setting to its default value */
+	reset(key: string);
+	/** Resets all settings to their default values */
+	resetAll();
+}
+
+interface SettingStorage extends SettingStorageBase { }
+
+class SettingStorageClass implements SettingStorageBase {
 
 	defaults: { [key: string]: any; } = {};
 	initSetting: string = '__initialized__';
@@ -17,7 +51,7 @@ class SettingStorage {
 	get firstRun() {
 		return this._firstRun;
 	}
-
+	
 	constructor(defaults?: { [key: string]: any; }, options?: SettingStorageOptions) {
 		var self = this;
 
@@ -116,12 +150,13 @@ class SettingStorage {
 			key = key.replace(/^[^a-zA-Z_]+/, '');
 			// consolidate invalid characters to dashes
 			key = key.replace(/[^a-zA-Z0-9_]+/g, '-');
-			// camel-case dashes
+			// convert dashes to camel case (foo-bar -> fooBar)
 			var i = -1;
 			while ((i = key.indexOf('-')) != -1) {
 				key = key.substr(0, i) + key.substr(i + 1, 1).toUpperCase() + key.substr(i + 2);
 			}
 
+			// if name is reserved, prefix with underscore
 			if (reserved.indexOf(key) >= 0) {
 				key = '_' + key;
 			}
@@ -146,4 +181,12 @@ class SettingStorage {
 
 		Object.defineProperties(this, descriptors);
 	}
+}
+
+/**
+* @param defaults A map containing setting names and their default values
+* @param options Configuration options
+*/
+function CreateSettings(defaults?: { [key: string]: any; }, options?: SettingStorageOptions): SettingStorage {
+	return <SettingStorage><any> new SettingStorageClass(defaults, options);
 }
