@@ -1,4 +1,7 @@
-﻿var OptionsPage = (function () {
+﻿/// <reference path="storage.ts" />
+/// <reference path="chrome.d.ts" />
+
+var OptionsPage = (function () {
     /* Public Functions */
     /**
     * @param storage The storage object to which the page should be synced
@@ -16,61 +19,61 @@
             window.addEventListener('DOMContentLoaded', this._onDOMContentLoaded.bind(this));
         }
     }
-    OptionsPage.isInput = /* Static Functions */
+    /* Static Functions */
     /** Gets whether an element is an input field */
-    function (element) {
+    OptionsPage.isInput = function (element) {
         if (OptionsPage.InputTags.indexOf(element.tagName.toLowerCase()) >= 0) {
             return true;
         }
     };
 
-    OptionsPage.shouldSkip = /** Gets whether an element should be ignored */
-    function (element) {
+    /** Gets whether an element should be ignored */
+    OptionsPage.shouldSkip = function (element) {
         if (element instanceof HTMLInputElement) {
-            return (OptionsPage.SkipTypes.indexOf((element).type.toLowerCase()) >= 0);
+            return (OptionsPage.SkipTypes.indexOf(element.type.toLowerCase()) >= 0);
         } else {
             return false;
         }
     };
 
-    OptionsPage.isNumeric = /** Gets whether an element is a numeric input */
-    function (element) {
+    /** Gets whether an element is a numeric input */
+    OptionsPage.isNumeric = function (element) {
         if (element instanceof HTMLInputElement) {
-            return (OptionsPage.NumericTypes.indexOf((element).type.toLowerCase()) >= 0);
+            return (OptionsPage.NumericTypes.indexOf(element.type.toLowerCase()) >= 0);
         } else {
             return false;
         }
     };
 
-    OptionsPage.isCheckable = /** Gets whether an element is a boolean input */
-    function (element) {
+    /** Gets whether an element is a boolean input */
+    OptionsPage.isCheckable = function (element) {
         if (element instanceof HTMLInputElement) {
-            return (OptionsPage.CheckableTypes.indexOf((element).type.toLowerCase()) >= 0);
+            return (OptionsPage.CheckableTypes.indexOf(element.type.toLowerCase()) >= 0);
         } else {
             return false;
         }
     };
 
-    OptionsPage.isRadio = /** Gets whether an element is a radio button */
-    function (element) {
+    /** Gets whether an element is a radio button */
+    OptionsPage.isRadio = function (element) {
         if (element instanceof HTMLInputElement) {
-            return (OptionsPage.RadioTypes.indexOf((element).type.toLowerCase()) >= 0);
+            return (OptionsPage.RadioTypes.indexOf(element.type.toLowerCase()) >= 0);
         } else {
             return false;
         }
     };
 
-    OptionsPage.isMultiSelect = /** Gets whether an element is a multi-select input */
-    function (element) {
+    /** Gets whether an element is a multi-select input */
+    OptionsPage.isMultiSelect = function (element) {
         if (element instanceof HTMLSelectElement) {
-            return (OptionsPage.MultiSelectTypes.indexOf((element).type.toLowerCase()) >= 0);
+            return (OptionsPage.MultiSelectTypes.indexOf(element.type.toLowerCase()) >= 0);
         } else {
             return false;
         }
     };
 
-    OptionsPage.getRadioValue = /** Gets the value of a set of radio buttons */
-    function (element) {
+    /** Gets the value of a set of radio buttons */
+    OptionsPage.getRadioValue = function (element) {
         var inputs = element.ownerDocument.querySelectorAll('input[type=radio][name="' + element.getAttribute('name') + '"]');
         for (var i = 0; i < inputs.length; i++) {
             var input = inputs[i];
@@ -81,12 +84,12 @@
         return null;
     };
 
-    OptionsPage.coerceToLimits = /**
+    /**
     * Coerces a number to the min/max values set on an input element
     * @param element The input element
     * @param value The value to check. If omitted, the element's current value is used.
     */
-    function (element, value) {
+    OptionsPage.coerceToLimits = function (element, value) {
         if (value === undefined) {
             value = element.valueAsNumber;
         }
@@ -103,10 +106,10 @@
         return value;
     };
 
-    OptionsPage.getTransformFunction = /**
+    /**
     * Gets the load/save transformation function for an element
     */
-    function (element, funcName) {
+    OptionsPage.getTransformFunction = function (element, funcName) {
         var func = element.dataset[funcName];
         if (func) {
             return window[func] || null;
@@ -144,9 +147,11 @@
             // If page not initialized, wait until later to add input
             this.initQueue.push({ el: element, reset: resetButton });
         } else {
+            // make sure this is an input first
             if (element.tagName && OptionsPage.isInput(element)) {
                 this._setupElement(element);
 
+                // if a reset button is given, add it
                 if (resetButton !== undefined) {
                     this._addResetButton(resetButton, [element]);
                 } else {
@@ -228,7 +233,7 @@
     OptionsPage.prototype._addResetButton = function (button, elements) {
         var self = this;
         button.addEventListener('click', function (e) {
-            if ((e.target).hasAttribute('data-confirm')) {
+            if (e.target.hasAttribute('data-confirm')) {
                 var message = (elements.length > 1) ? 'Are you sure you want to reset these settings to their default values?' : 'Are you sure you want to reset this setting to its default value?';
 
                 button.setAttribute('disabled', 'disabled');
@@ -267,7 +272,7 @@
     OptionsPage.prototype._setupAllResetButtons = function () {
         var resets = this.document.querySelectorAll('[data-reset]');
         for (var i = 0; i < resets.length; i++) {
-            var elementNames = (resets[i]).dataset.reset.split(' ');
+            var elementNames = resets[i].dataset['reset'].split(' ');
             var elements = [];
             elementNames.forEach(function (name) {
                 elements = elements.concat(Array.prototype.slice.call(document.getElementsByName(name)));
@@ -333,7 +338,7 @@
         } else if (OptionsPage.isMultiSelect(element)) {
             // collect selected option values as an array
             value = [];
-            var options = (element).selectedOptions;
+            var options = element.selectedOptions;
             for (var i = 0; i < options.length; i++) {
                 value.push(options[i].value);
             }
@@ -585,10 +590,10 @@ window.addEventListener('DOMContentLoaded', function () {
     var fields = document.querySelectorAll('[data-manifest]');
     for (var i = 0; i < fields.length; i++) {
         var field = fields[i];
-        var format = field.dataset.format || '{0}';
+        var format = field.dataset['format'] || '{0}';
         var values = [];
 
-        field.dataset.manifest.split(',').forEach(function (property) {
+        field.dataset['manifest'].split(',').forEach(function (property) {
             var chunks = property.split('.');
             var current = manifest;
 
@@ -604,12 +609,17 @@ window.addEventListener('DOMContentLoaded', function () {
         });
 
         if (values.length === 0 || values[0] === undefined) {
-            field.textContent = 'manifest: ' + field.dataset.manifest;
+            field.textContent = 'manifest: ' + field.dataset['manifest'];
         } else {
-            field.textContent = format.replace(/{(\d+)}/g, function (match, index) {
+            field.textContent = format.replace(/{(\d+)}/g, function (match) {
+                var groups = [];
+                for (var _i = 0; _i < (arguments.length - 1); _i++) {
+                    groups[_i] = arguments[_i + 1];
+                }
+                var index = groups[0];
                 return (typeof values[index] != 'undefined') ? values[index].toString() : match.toString();
             });
         }
     }
 });
-//@ sourceMappingURL=options-page.js.map
+//# sourceMappingURL=options-page.js.map

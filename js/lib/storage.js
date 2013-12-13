@@ -101,21 +101,9 @@
     SettingStorageClass.prototype._defineAccessors = function () {
         var descriptors = {};
         var reserved = [
-            'defaults',
-            'fillDefaults',
-            'get',
-            'getAll',
-            'init',
-            'initSetting',
-            'isDefined',
-            'prefix',
-            'reset',
-            'resetAll',
-            'set',
-            'setAll',
-            'storage',
-            'useAccessors'
-        ];
+            'defaults', 'fillDefaults', 'get', 'getAll', 'init',
+            'initSetting', 'isDefined', 'prefix', 'reset', 'resetAll',
+            'set', 'setAll', 'storage', 'useAccessors'];
 
         function sanitizeName(key) {
             // remove invalid start characters
@@ -130,6 +118,7 @@
                 key = key.substr(0, i) + key.substr(i + 1, 1).toUpperCase() + key.substr(i + 2);
             }
 
+            // if name is reserved, prefix with underscore
             if (reserved.indexOf(key) >= 0) {
                 key = '_' + key;
             }
@@ -168,4 +157,4 @@
 function CreateSettings(defaults, options) {
     return new SettingStorageClass(defaults, options);
 }
-//@ sourceMappingURL=storage.js.map
+//# sourceMappingURL=storage.js.map

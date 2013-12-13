@@ -335,7 +335,7 @@ class OptionsPage {
 	private _setupAllResetButtons() {
 		var resets = this.document.querySelectorAll('[data-reset]');
 		for (var i = 0; i < resets.length; i++) {
-			var elementNames = (<HTMLElement>resets[i]).dataset.reset.split(' ');
+			var elementNames = (<HTMLElement>resets[i]).dataset['reset'].split(' ');
 			var elements = [];
 			elementNames.forEach((name) => {
 				elements = elements.concat(Array.prototype.slice.call(document.getElementsByName(name)));
@@ -548,7 +548,7 @@ class ModalDialog {
 
 	constructor(title: string, text: string, ...buttons: ModalButton[]);
 	constructor(title: string, text: string, onclose: Function, ...buttons: ModalButton[]);
-	constructor(title: string, text: string, onclose: any) {
+	constructor(title: string, text: string, onclose?: any) {
 		var buttons: ModalButton[];
 		if (typeof onclose === 'function') {
 			buttons = Array.prototype.slice.call(arguments, [3]);
@@ -656,10 +656,10 @@ window.addEventListener('DOMContentLoaded', () => {
 	var fields = document.querySelectorAll('[data-manifest]');
 	for (var i = 0; i < fields.length; i++) {
 		var field = <HTMLElement>fields[i];
-		var format = field.dataset.format || '{0}';
+		var format: string = field.dataset['format'] || '{0}';
 		var values = [];
 
-		field.dataset.manifest.split(',').forEach((property) => {
+		field.dataset['manifest'].split(',').forEach((property: string) => {
 			var chunks = property.split('.');
 			var current = manifest;
 
@@ -675,9 +675,10 @@ window.addEventListener('DOMContentLoaded', () => {
 		});
 		
 		if (values.length === 0 || values[0] === undefined) {
-			field.textContent = 'manifest: ' + field.dataset.manifest;
+			field.textContent = 'manifest: ' + field.dataset['manifest'];
 		} else {
-			field.textContent = format.replace(/{(\d+)}/g, function (match, index) {
+			field.textContent = format.replace(/{(\d+)}/g, function (match, ...groups) {
+				var index = groups[0];
 				return (typeof values[index] != 'undefined') ? values[index].toString() : match.toString();
 			});
 		}

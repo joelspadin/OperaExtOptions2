@@ -30,7 +30,7 @@ interface SettingStorageBase {
 	/** Sets the values of one or more settings */
 	setAll(setting: { [key: string]: any; });
 	/** Returns true if a setting with the given name exists */
-	isDefined(key: string): bool;
+	isDefined(key: string): boolean;
 	/** Reset a setting to its default value */
 	reset(key: string);
 	/** Resets all settings to their default values */
@@ -93,7 +93,7 @@ class SettingStorageClass implements SettingStorageBase {
 	}
 
 	public getAll(): { [key: string]: any; } {
-		var result = {};
+		var result: { [key: string]: any; } = {};
 		for (var key in this.defaults) {
 			result[key] = this.get(key);
 		}
@@ -108,7 +108,7 @@ class SettingStorageClass implements SettingStorageBase {
 		}
 	}
 
-	public isDefined(key: string): bool {
+	public isDefined(key: string): boolean {
 		return this.storage[this.prefix + key] !== undefined;
 	}
 
